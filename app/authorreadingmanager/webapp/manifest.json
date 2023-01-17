@@ -1,0 +1,185 @@
+{
+    "_version": "1.48.0",
+    "sap.app": {
+        "id": "authorreadingmanager",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:lrop",
+            "version": "1.8.3",
+            "toolsId": "e528ca6a-2cd8-496b-9ca4-e28f2d440b15"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/authorreadingmanager/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "4.0"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "annotations/annotation.xml"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "authorreadingmanager-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "Object",
+                    "action": "display",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "icon": ""
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.109.3",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.ushell": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "authorreadingmanager.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            },
+            "@i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            }
+        },
+        "resources": {
+            "css": []
+        },
+        "routing": {
+            "config": {},
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "AuthorReadingsList",
+                    "target": "AuthorReadingsList"
+                },
+                {
+                    "pattern": "AuthorReadings({key}):?query:",
+                    "name": "AuthorReadingsObjectPage",
+                    "target": "AuthorReadingsObjectPage"
+                },
+                {
+                    "pattern": "AuthorReadings({key})/participants({key2}):?query:",
+                    "name": "ParticipantsObjectPage",
+                    "target": "ParticipantsObjectPage"
+                }
+            ],
+            "targets": {
+                "AuthorReadingsList": {
+                    "type": "Component",
+                    "id": "AuthorReadingsList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "AuthorReadings",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "AuthorReadings": {
+                                    "detail": {
+                                        "route": "AuthorReadingsObjectPage"
+                                    }
+                                }
+                            },
+                            "initialLoad": true
+                        }
+                    }
+                },
+                "AuthorReadingsObjectPage": {
+                    "type": "Component",
+                    "id": "AuthorReadingsObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "entitySet": "AuthorReadings",
+                            "navigation": {
+                                "participants": {
+                                    "detail": {
+                                        "route": "ParticipantsObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "ParticipantsObjectPage": {
+                    "type": "Component",
+                    "id": "ParticipantsObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "entitySet": "Participants"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "sap.fiori": {
+        "registrationIds": [],
+        "archeType": "transactional"
+    }
+}
